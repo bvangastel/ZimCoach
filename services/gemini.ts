@@ -1,4 +1,3 @@
-
 import { GoogleGenAI, Type } from "@google/genai";
 import { SmartGoalAnalysis, PlanStep, LearningStrategy, PlanAnalysis } from "../types";
 
@@ -63,7 +62,7 @@ export const analyzeGoal = async (goal: string, strategy: LearningStrategy): Pro
     return {
       isSmart: false,
       shortTitle: goal.split(' ').slice(0, 5).join(' ') + '...',
-      feedback: "Kan geen verbinding maken. Is je doel specifiek genoeg?",
+      feedback: "Kan geen verbinding maken. Is je API key correct ingesteld?",
       suggestion: goal
     };
   }
@@ -111,13 +110,14 @@ export const analyzePlan = async (goal: string, plan: PlanStep[], strategy: Lear
     ${planText}
 
     Jouw taak: Wees een KRITISCHE coach.
-    1. Kwantiteit: Zijn er genoeg stappen? (Bijv: alleen 'lezen' is te weinig).
-    2. Kwaliteit: Zijn de stappen specifiek genoeg? (Bijv: 'leren' is te vaag).
+    1. Kwantiteit: Zijn er genoeg stappen? (Bijv: alleen 'lezen' is te weinig, minimaal 3 stappen verwacht).
+    2. Kwaliteit: Zijn de stappen specifiek genoeg? (Bijv: 'leren' is te vaag, welk hoofdstuk? welke methode?).
     3. Betekenisvol: Dragen ze echt bij aan het doel?
+    4. Haalbaarheid: Is de tijd realistisch?
 
-    Als de planning te mager of te vaag is, zet isValid op false.
+    Als de planning te mager, te vaag of te kort is, zet isValid op false.
     Geef in 'feedback' streng maar rechtvaardig commentaar.
-    Geef in 'tip' 2 concrete suggesties voor EXTRA stappen die nu ontbreken.
+    Geef in 'tip' 2 concrete, actiegerichte suggesties voor EXTRA stappen die nu ontbreken.
   `;
 
   try {
@@ -146,7 +146,7 @@ export const analyzePlan = async (goal: string, plan: PlanStep[], strategy: Lear
   } catch (error) {
     return {
       isValid: true,
-      feedback: "Ziet eruit als een begin.",
+      feedback: "Ziet eruit als een begin. Controleer zelf of je niets vergeet.",
       tip: "Zorg dat je voldoende pauzes neemt."
     };
   }
