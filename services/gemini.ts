@@ -62,7 +62,7 @@ export const analyzeGoal = async (goal: string, strategy: LearningStrategy): Pro
     return {
       isSmart: false,
       shortTitle: goal.split(' ').slice(0, 5).join(' ') + '...',
-      feedback: "Kan geen verbinding maken. Is je API key correct ingesteld?",
+      feedback: "Kan geen verbinding maken. Controleer je API_KEY.",
       suggestion: goal
     };
   }
